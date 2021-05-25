@@ -261,7 +261,11 @@ class JsonStatDataSet:
 
         # decoding args
         idx = self._2idx(*args, **kargs)
-        value = self.__value[idx]
+
+        if str(idx) in self.__value:
+            value = self.__value[str(idx)]
+        else:
+            value = None
 
         #
         # status
@@ -303,7 +307,10 @@ class JsonStatDataSet:
         :param lst: [0,3,4]
         :returns: value at dimension [0,3,4]
         """
-        return self.__value[self.lint_as_idx(lst)]
+        tuple_list = list(self.__value.items())
+        key_value = tuple_list[self.lint_as_idx(lst)]
+
+        return key_value
 
     #
     # dataset can be access using different type of indexes
